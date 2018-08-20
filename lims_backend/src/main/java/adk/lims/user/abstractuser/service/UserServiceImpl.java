@@ -1,5 +1,6 @@
 package adk.lims.user.abstractuser.service;
 
+import adk.lims.user.abstractuser.model.User;
 import adk.lims.user.employee.model.entity.Employee;
 import adk.lims.user.employee.service.EmployeeService;
 import adk.lims.user.patient.model.entity.Patient;
@@ -35,4 +36,5 @@ public class UserServiceImpl implements UserService{
 
          return employee;
     }
+
 }

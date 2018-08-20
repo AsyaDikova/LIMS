@@ -9,4 +9,8 @@ public interface EmployeeService {
     Employee save(Employee employee);
 
     Employee createEmployee(EmployeeRegistryBindingModel model);
+
+    Employee findEmployeeById(Long id);
+
+    Employee getCurrentEmployee();
 }

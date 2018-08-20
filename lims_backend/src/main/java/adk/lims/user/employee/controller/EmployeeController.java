@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import static adk.lims.core.constants.URLMapping.Employee.EMPLOYEE_BASE;
+import static adk.lims.core.constants.URLMapping.REGISTER;
+
 @Controller
-@RequestMapping("/employee")
+@RequestMapping(EMPLOYEE_BASE)
 public class EmployeeController {
 
     private final EmployeeService employeeService;
@@ -20,11 +23,9 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @PostMapping("/register")
+    @PostMapping(REGISTER)
     public ResponseEntity<?> registryEmployee(@RequestBody EmployeeRegistryBindingModel registerModel){
-
         Employee savedEmployee = this.employeeService.createEmployee(registerModel);
-
-        return new ResponseEntity("Everything is ok", HttpStatus.OK);
+        return new ResponseEntity(savedEmployee, HttpStatus.OK);
     }
 }

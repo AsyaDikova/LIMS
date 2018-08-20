@@ -7,6 +7,7 @@ import adk.lims.user.employee.model.binding.EmployeeRegistryBindingModel;
 import adk.lims.user.employee.model.entity.Employee;
 import adk.lims.user.employee.repository.EmployeeRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -45,5 +46,16 @@ public class EmployeeServiceImpl implements EmployeeService{
         customEmployeeModel.setPassword(this.bCryptPasswordEncoder.encode(model.getPassword()));
         customEmployeeModel.getRoles().add(employeeRole);
         return this.save(customEmployeeModel);
+    }
+
+    @Override
+    public Employee findEmployeeById(Long id) {
+        return this.employeeRepository.getOne(id);
+    }
+
+    @Override
+    public Employee getCurrentEmployee() {
+        String principalEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return this.employeeRepository.findByEmail(principalEmail);
     }
 }

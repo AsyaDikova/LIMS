@@ -6,17 +6,8 @@ public class AddAnalysisBindingModel {
     private Double price;
     private int periodOfProduct;
     private String type;
-    private Long employeeId;
 
     public AddAnalysisBindingModel() {
-    }
-
-    public AddAnalysisBindingModel(String name, String description, Double price, int periodOfProduct, String type) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.periodOfProduct = periodOfProduct;
-        this.type = type;
     }
 
     public String getName() {
@@ -57,13 +48,5 @@ public class AddAnalysisBindingModel {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public Long getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(Long employeeId) {
-        this.employeeId = employeeId;
     }
 }

@@ -9,13 +9,20 @@ import java.util.*;
 
 @Entity
 @Table(name = "employees")
-public class Employee extends User {
+public class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @OneToMany(mappedBy = "employee")
     private List<Analysis> analyzes;
 
     @OneToOne(mappedBy = "employee")
     private CalendarSchedule calendarSchedule;
+
+    @OneToOne
+    private User user;
+
 
     public Employee() {
         super();
@@ -36,5 +43,21 @@ public class Employee extends User {
 
     public void setCalendarSchedule(CalendarSchedule calendarSchedule) {
         this.calendarSchedule = calendarSchedule;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

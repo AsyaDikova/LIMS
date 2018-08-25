@@ -10,8 +10,9 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@MappedSuperclass
-public class User  implements UserDetails {
+@Entity
+@Table(name = "users")
+public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,9 +33,11 @@ public class User  implements UserDetails {
             inverseJoinColumns=@JoinColumn(name="role_id"))
     private Set<Role> roles;
 
+
+
     public User() {
-        this.roles = new HashSet<>();
         this.createdOn = new Date();
+        this.roles = new HashSet<>();
     }
 
     public Long getId() {
@@ -90,16 +93,11 @@ public class User  implements UserDetails {
     }
 
     public Set<Role> getRoles() {
-        return roles;
+        return this.roles;
     }
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.roles;
     }
 
     @Override
@@ -110,6 +108,11 @@ public class User  implements UserDetails {
     @Override
     public String getUsername() {
         return this.email;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.roles;
     }
 
     @Override

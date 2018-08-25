@@ -6,10 +6,13 @@ import adk.lims.analysis.model.view.AllAnalyzesViewModel;
 import adk.lims.analysis.model.view.AnalysisDetailViewModel;
 import adk.lims.analysis.service.AnalysisService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static adk.lims.core.constants.MessageMapping.Analysis.PROBLEM_WITH_SAVING_ANALYSIS;
@@ -22,10 +25,13 @@ public class AnalysisController {
         this.analysisService = analysisService;
     }
 
-    @GetMapping("/analyzes/all")
+    @GetMapping(value = "/analyzes", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getAllAnalyzes(){
         List<AllAnalyzesViewModel> allAnalyzesViewModelList = this.analysisService.allAnalyzes();
-        return new ResponseEntity<>(allAnalyzesViewModelList, HttpStatus.OK);
+        if(allAnalyzesViewModelList == null)
+            return new ResponseEntity<>(new HashMap<String, Object>(){{put("analyzes", new ArrayList<>());}} , HttpStatus.OK);
+
+        return new ResponseEntity<>(new HashMap<String, Object>(){{put("analyzes", allAnalyzesViewModelList);}} , HttpStatus.OK);
     }
 
     @GetMapping("/analyzes/{id}")
@@ -40,6 +46,6 @@ public class AnalysisController {
         if(savedAnalysis == null)
             return new ResponseEntity<>(PROBLEM_WITH_SAVING_ANALYSIS, HttpStatus.BAD_REQUEST);
 
-        return new ResponseEntity<>(savedAnalysis, HttpStatus.OK);
+        return new ResponseEntity<>(new HashMap<String, String>(){{put("success", "ok");}}, HttpStatus.OK);
     }
 }

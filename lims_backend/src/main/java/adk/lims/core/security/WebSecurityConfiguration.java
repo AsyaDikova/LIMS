@@ -1,6 +1,5 @@
 package adk.lims.core.security;
 
-import adk.lims.user.abstractuser.service.UserService;
 import adk.lims.user.abstractuser.service.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,7 +36,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/analyzes/**").permitAll()
                 .antMatchers("/patient/register", "/occurrence/create").access("hasRole('ROLE_REGISTRAR') or hasRole('ROLE_ADMIN')")
-                .antMatchers("/analyses/**").access("hasRole('ROLE_REGISTRAR') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EMPLOYEE')")
+                .antMatchers("/analysis/**").access("hasRole('ROLE_REGISTRAR') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EMPLOYEE')")
                 .antMatchers("/employee/register", "/admin/**").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().authenticated()
                 .and()

@@ -9,6 +9,13 @@ public class AllAnalyzesViewModel {
     public AllAnalyzesViewModel() {
     }
 
+    public AllAnalyzesViewModel(Long id, String name, String type, Double price) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.price = price;
+    }
+
     public Long getId() {
         return id;
     }

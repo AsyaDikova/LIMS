@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import Input from '../common/Input';
-import { createAnalyses, getEmployeeForAnalyses } from '../../api/remote';
+import { createAnalyses } from '../../api/remote';
 import { withRouter } from 'react-router-dom';
-import EmployeeName from "../EmployeePage/EmployeeName";
 
 
 class AnalysesAddPage extends Component {

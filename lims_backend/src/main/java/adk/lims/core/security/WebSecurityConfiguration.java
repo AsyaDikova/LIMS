@@ -35,7 +35,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/analyzes/**").permitAll()
-                .antMatchers("/patient/register", "/occurrence/create").access("hasRole('ROLE_REGISTRAR') or hasRole('ROLE_ADMIN')")
+                .antMatchers("/patient/register", "/consultation/create", "/analysisResult/create").access("hasRole('ROLE_REGISTRAR') or hasRole('ROLE_ADMIN')")
                 .antMatchers("/analysis/**").access("hasRole('ROLE_REGISTRAR') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EMPLOYEE')")
                 .antMatchers("/employee/register", "/admin/**").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().authenticated()

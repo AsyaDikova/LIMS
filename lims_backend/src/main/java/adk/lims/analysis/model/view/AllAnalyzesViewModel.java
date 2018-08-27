@@ -5,15 +5,17 @@ public class AllAnalyzesViewModel {
     private String name;
     private String type;
     private Double price;
+    private int periodOfProduct;
 
     public AllAnalyzesViewModel() {
     }
 
-    public AllAnalyzesViewModel(Long id, String name, String type, Double price) {
+    public AllAnalyzesViewModel(Long id, String name, String type, Double price, int periodOfProduct) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.price = price;
+        this.periodOfProduct = periodOfProduct;
     }
 
     public Long getId() {
@@ -46,5 +48,13 @@ public class AllAnalyzesViewModel {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public int getPeriodOfProduct() {
+        return periodOfProduct;
+    }
+
+    public void setPeriodOfProduct(int periodOfProduct) {
+        this.periodOfProduct = periodOfProduct;
     }
 }

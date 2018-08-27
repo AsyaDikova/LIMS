@@ -32,7 +32,7 @@ public class AnalysisResultController {
     public ResponseEntity<?> createAnalysisResult(@RequestBody CreateAnalysisResult model){
         AnalysisResult savedAnalysisResult = this.analysisResultService.createAnalysisResult(model);
         if(savedAnalysisResult == null){
-            new ResponseEntity<>(PROBLEM_WITH_SAVING_ANALYSIS_RESULT, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(PROBLEM_WITH_SAVING_ANALYSIS_RESULT, HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity<>(savedAnalysisResult, HttpStatus.OK);

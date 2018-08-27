@@ -29,7 +29,7 @@ class LoginPage extends Component {
         localStorage.setItem('authToken', res.Authorization.toString().replace("Bearer", ""));
         localStorage.setItem('user', decode(res.Authorization.toString().replace("Bearer", "")).sub);
         localStorage.setItem('isAdmin', decode(res.Authorization.toString().replace("Bearer", "")).isAdmin);
-        localStorage.setItem('isRegistrar', decode(res.Authorization.toString().replace("Bearer", "")).isRester);
+        localStorage.setItem('isRegistrar', decode(res.Authorization.toString().replace("Bearer", "")).isRegistrar);
 
         this.props.history.push('/');
     }

@@ -6,7 +6,6 @@ public class EmployeeRegistryBindingModel {
     private String firstName;
     private String lastName;
     private String phoneNumber;
-    private String repeatPassword;
 
     public EmployeeRegistryBindingModel() {
     }
@@ -49,13 +48,5 @@ public class EmployeeRegistryBindingModel {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public String getRepeatPassword() {
-        return this.repeatPassword;
-    }
-
-    public void setRepeatPassword(String repeatPassword) {
-        this.repeatPassword = repeatPassword;
     }
 }

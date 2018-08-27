@@ -4,12 +4,17 @@ import adk.lims.consultation.model.binding.CreateConsultationBindingModel;
 import adk.lims.consultation.model.entity.Consultation;
 import adk.lims.consultation.service.ConsultationService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.HashMap;
+
+import static adk.lims.core.constants.URLMapping.ADD;
 import static adk.lims.core.constants.URLMapping.CREATE;
 import static adk.lims.core.constants.URLMapping.Consultation.CONSULTATION_BASE;
 
@@ -23,10 +28,20 @@ public class ConsultationController {
         this.consultationService = consultationService;
     }
 
-    @PostMapping(CREATE)
+    @PostMapping(value = CREATE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> createConsultation(@RequestBody CreateConsultationBindingModel model){
         Consultation savedConsultation = this.consultationService.saveConsultation(model);
 
-        return new ResponseEntity<>(savedConsultation, HttpStatus.OK);
+        if(savedConsultation == null){
+            return new ResponseEntity<>(new HashMap<String, Object>(){{
+                put("success", false);
+                put("message", "Problem with create consultation");
+            }}, HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(new HashMap<String, Object>(){{
+            put("success", true);
+            put("consultation", savedConsultation);
+        }}, HttpStatus.OK);
     }
 }

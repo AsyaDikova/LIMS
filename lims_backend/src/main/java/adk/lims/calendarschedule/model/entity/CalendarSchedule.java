@@ -5,6 +5,7 @@ import adk.lims.user.employee.model.entity.Employee;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -21,8 +22,11 @@ public class CalendarSchedule {
     @OneToMany(mappedBy = "calendarSchedule")
     private List<DaySchedule> daySchedules;
 
+    private Date createdOn;
+
     public CalendarSchedule() {
         this.daySchedules = new ArrayList<>();
+        this.createdOn = new Date();
     }
 
     public Long getId() {
@@ -47,5 +51,13 @@ public class CalendarSchedule {
 
     public void setDaySchedules(List<DaySchedule> daySchedules) {
         this.daySchedules = daySchedules;
+    }
+
+    public Date getCreatedOn() {
+        return this.createdOn;
+    }
+
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
     }
 }

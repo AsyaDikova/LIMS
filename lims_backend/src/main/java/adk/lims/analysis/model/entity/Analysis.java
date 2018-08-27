@@ -5,6 +5,7 @@ import adk.lims.consultation.model.entity.Consultation;
 import adk.lims.user.employee.model.entity.Employee;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,18 +37,10 @@ public class Analysis {
     @JoinColumn(name="employee_id")
     private Employee employee;
 
-    @OneToMany(mappedBy = "analysis")
-    private List<AnalysisResult> results;
-
-    @OneToMany(mappedBy = "analysis")
-    private List<Consultation> consultations;
-
     @Column(nullable = false)
     private String type;
 
     public Analysis() {
-        this.consultations = new ArrayList<>();
-        this.results = new ArrayList<>();
         this.createdOn = new Date();
     }
 
@@ -113,21 +106,5 @@ public class Analysis {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public List<AnalysisResult> getResults() {
-        return results;
-    }
-
-    public void setResults(List<AnalysisResult> results) {
-        this.results = results;
-    }
-
-    public List<Consultation> getConsultations() {
-        return consultations;
-    }
-
-    public void setConsultations(List<Consultation> consultations) {
-        this.consultations = consultations;
     }
 }

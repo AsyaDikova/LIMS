@@ -5,6 +5,8 @@ import adk.lims.analysis.service.AnalysisService;
 import adk.lims.consultation.model.binding.CreateConsultationBindingModel;
 import adk.lims.consultation.model.entity.Consultation;
 import adk.lims.consultation.repository.ConsultationRepository;
+import adk.lims.dayschedule.model.entity.DaySchedule;
+import adk.lims.dayschedule.service.DayScheduleService;
 import adk.lims.user.patient.model.entity.Patient;
 import adk.lims.user.patient.service.PatientService;
 import org.springframework.stereotype.Service;
@@ -14,13 +16,16 @@ public class ConsultationServiceImpl implements ConsultationService {
     private final ConsultationRepository consultationRepository;
     private final AnalysisService analysisService;
     private final PatientService patientService;
+    private final DayScheduleService dayScheduleService;
 
     public ConsultationServiceImpl(ConsultationRepository consultationRepository,
                                    AnalysisService analysisService,
-                                   PatientService patientService) {
+                                   PatientService patientService,
+                                   DayScheduleService dayScheduleService) {
         this.consultationRepository = consultationRepository;
         this.analysisService = analysisService;
         this.patientService = patientService;
+        this.dayScheduleService = dayScheduleService;
     }
 
 
@@ -36,6 +41,12 @@ public class ConsultationServiceImpl implements ConsultationService {
         consultation.setHourOfConsultation(model.getHourOfConsultation());
         consultation.setPatient(patient);
 
-        return this.consultationRepository.save(consultation);
+        Consultation saveConsultation = this.consultationRepository.save(consultation);
+
+        this.dayScheduleService.editByEmployeeDateAndHour(analysis.getEmployee(), model.getDateOfConsultation(), model.getHourOfConsultation(), saveConsultation.getId());
+
+        return saveConsultation;
     }
+
+
 }

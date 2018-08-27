@@ -1,8 +1,11 @@
 package adk.lims.user.employee.service;
 
+import adk.lims.calendarschedule.model.entity.CalendarSchedule;
+import adk.lims.calendarschedule.service.CalendarScheduleService;
 import adk.lims.core.role.Role;
 import adk.lims.core.role.RoleRepository;
 import adk.lims.core.role.RoleType;
+import adk.lims.dayschedule.service.DayScheduleService;
 import adk.lims.user.abstractuser.model.User;
 import adk.lims.user.abstractuser.service.UserService;
 import adk.lims.user.employee.exception.PasswordNotRepeatCorrectException;
@@ -24,17 +27,23 @@ public class EmployeeServiceImpl implements EmployeeService{
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserService userService;
+    private final DayScheduleService dayScheduleService;
+    private final CalendarScheduleService calendarScheduleService;
 
     public EmployeeServiceImpl(EmployeeRepository employeeRepository,
                                ObjectMapper objectMapper,
                                RoleRepository roleRepository,
                                BCryptPasswordEncoder bCryptPasswordEncoder,
-                               UserService userService) {
+                               UserService userService,
+                               DayScheduleService dayScheduleService,
+                               CalendarScheduleService calendarScheduleService) {
         this.employeeRepository = employeeRepository;
         this.objectMapper = objectMapper;
         this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userService = userService;
+        this.dayScheduleService = dayScheduleService;
+        this.calendarScheduleService = calendarScheduleService;
     }
 
     @Override
@@ -44,9 +53,6 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public Employee createEmployee(EmployeeRegistryBindingModel model) {
-        if(!model.getPassword().equals(model.getRepeatPassword())){
-            throw new PasswordNotRepeatCorrectException(PASSWORD_MISMATCH_MESSAGE);
-        }
 
         User userModel = this.objectMapper.convertValue(model, User.class);
         Role employeeRole = this.roleRepository.findByAuthority(RoleType.ROLE_EMPLOYEE.name());
@@ -55,9 +61,19 @@ public class EmployeeServiceImpl implements EmployeeService{
         User savedUser = this.userService.save(userModel);
 
         Employee currentEmployee = new Employee();
-        currentEmployee.setUser(savedUser);
 
-        return this.save(currentEmployee);
+        Employee saveEmployee = this.employeeRepository.save(currentEmployee);
+
+        CalendarSchedule calendar = new CalendarSchedule();
+        CalendarSchedule savedCalendar = this.calendarScheduleService.save(calendar);
+        savedCalendar.setDaySchedules(this.dayScheduleService.OneMonthDailySchedule(savedCalendar));
+        savedCalendar.setEmployee(saveEmployee);
+        CalendarSchedule savedCalendarWithSchedule = this.calendarScheduleService.save(savedCalendar);
+
+        saveEmployee.setUser(savedUser);
+        saveEmployee.setCalendarSchedule(savedCalendarWithSchedule);
+
+        return this.save(saveEmployee);
     }
 
     @Override
@@ -70,4 +86,5 @@ public class EmployeeServiceImpl implements EmployeeService{
         String principalEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return this.employeeRepository.findByUser_Email(principalEmail);
     }
+
 }

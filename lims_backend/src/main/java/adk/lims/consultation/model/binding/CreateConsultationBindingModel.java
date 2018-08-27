@@ -1,10 +1,10 @@
 package adk.lims.consultation.model.binding;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class CreateConsultationBindingModel {
 
-    private Date dateOfConsultation;
+    private LocalDate dateOfConsultation;
     private int hourOfConsultation;
     private Long analysisId;
     private Long patientId;
@@ -12,11 +12,11 @@ public class CreateConsultationBindingModel {
     public CreateConsultationBindingModel() {
     }
 
-    public Date getDateOfConsultation() {
+    public LocalDate getDateOfConsultation() {
         return dateOfConsultation;
     }
 
-    public void setDateOfConsultation(Date dateOfConsultation) {
+    public void setDateOfConsultation(LocalDate dateOfConsultation) {
         this.dateOfConsultation = dateOfConsultation;
     }
 

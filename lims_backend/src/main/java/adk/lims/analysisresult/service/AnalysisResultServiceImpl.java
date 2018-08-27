@@ -12,10 +12,8 @@ import adk.lims.user.patient.service.PatientService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -41,9 +39,12 @@ public class AnalysisResultServiceImpl implements AnalysisResultService{
         Analysis analysis = this.analysisService.getById(createAnalysisResult.getAnalysisId());
         Patient patient = this.patientService.findPatientById(createAnalysisResult.getPatientId());
 
-        Date today = new Date();
-        LocalDateTime ldt = LocalDateTime.from(today.toInstant()).plusDays(analysis.getPeriodOfProduct());
-        Date dueDate = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
+//        Date today = new Date();
+//        LocalDate dueDate = LocalDate.from(today.toInstant()).plusDays(analysis.getPeriodOfProduct());
+//        Date dueDate = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
+
+        LocalDate dueDate = LocalDate.now();
+        dueDate = dueDate.plusDays(this.calculateDueDate(dueDate, analysis.getPeriodOfProduct()));
 
         AnalysisResult analysisResult = new AnalysisResult();
         analysisResult.setAnalysis(analysis);
@@ -75,7 +76,20 @@ public class AnalysisResultServiceImpl implements AnalysisResultService{
     @Override
     public OneMyAnalysisResultVewModel getOneMyAnalysisResult(Long id) {
         AnalysisResult analysisResult = this.analysisResultRepository.getOne(id);
-        OneMyAnalysisResultVewModel result = this.objectMapper.convertValue(analysisResult, OneMyAnalysisResultVewModel.class);
-        return result;
+        return this.objectMapper.convertValue(analysisResult, OneMyAnalysisResultVewModel.class);
+    }
+
+    private int calculateDueDate(LocalDate currentDate, int analysisPeriod){
+        int dayOfWeek = currentDate.getDayOfWeek().getValue();
+        int calculatePeriod = analysisPeriod + (dayOfWeek + analysisPeriod) * 2 / 7 - 1;
+
+        LocalDate calcDate = currentDate.plusDays(calculatePeriod);
+        if(calcDate.getDayOfWeek().name().equals("SUNDAY")) {
+            calculatePeriod += 1;
+        } else if(calcDate.getDayOfWeek().name().equals("SATURDAY")){
+            calculatePeriod += 2;
+        }
+
+        return calculatePeriod;
     }
 }

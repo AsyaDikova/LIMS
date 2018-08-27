@@ -4,6 +4,7 @@ import adk.lims.analysis.model.entity.Analysis;
 import adk.lims.user.patient.model.entity.Patient;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -15,15 +16,15 @@ public class Consultation {
 
     private Date createdOn;
 
-    private Date dateOfConsultation;
+    private LocalDate dateOfConsultation;
 
     private int hourOfConsultation;
 
-    @ManyToOne(fetch= FetchType.LAZY)
+    @ManyToOne(fetch= FetchType.EAGER)
     @JoinColumn(name="analysis_id")
     private Analysis analysis;
 
-    @ManyToOne(fetch= FetchType.LAZY)
+    @ManyToOne(fetch= FetchType.EAGER)
     @JoinColumn(name="patient_id")
     private Patient patient;
 
@@ -48,11 +49,11 @@ public class Consultation {
         this.createdOn = createdOn;
     }
 
-    public Date getDateOfConsultation() {
+    public LocalDate getDateOfConsultation() {
         return dateOfConsultation;
     }
 
-    public void setDateOfConsultation(Date dateOfConsultation) {
+    public void setDateOfConsultation(LocalDate dateOfConsultation) {
         this.dateOfConsultation = dateOfConsultation;
     }
 

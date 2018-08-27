@@ -1,10 +1,10 @@
 package adk.lims.analysisresult.model.view;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class AllMyAnalysisResult {
     private Long id;
-    private Date dueDate;
+    private LocalDate dueDate;
     private String analysisName;
 
     public AllMyAnalysisResult() {
@@ -18,11 +18,11 @@ public class AllMyAnalysisResult {
         this.id = id;
     }
 
-    public Date getDueDate() {
+    public LocalDate getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
 

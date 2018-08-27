@@ -18,7 +18,6 @@ class RegisterPage extends Component {
             firstName: '',
             lastName: '',
             phoneNumber: '',
-            repeatPassword: '',
             error: false
         };
 
@@ -33,15 +32,15 @@ class RegisterPage extends Component {
     async onSubmitHandler(e) {
         e.preventDefault();
 
-        if(this.state.password !== this.state.repeatPassword){
-            this.setState({
-                error: "Password not equals!"
-            });
-            return;
-        }
+        // if(this.state.password !== this.state.repeatPassword){
+        //     this.setState({
+        //         error: "Password not equals!"
+        //     });
+        //     return;
+        // }
 
         const res = await register(this.state.email, this.state.password,
-            this.state.firstName, this.state.lastName, this.state.phoneNumber, this.state.repeatPassword);
+            this.state.firstName, this.state.lastName, this.state.phoneNumber);
 
         if(!res.success){
             this.setState({error: res.message});
@@ -88,13 +87,13 @@ class RegisterPage extends Component {
                         onChange={this.onChangeHandler}
                         label="Password"
                     />
-                    <Input
-                        name="repeatPassword"
-                        type="text"
-                        value={this.state.repeatPassword}
-                        onChange={this.onChangeHandler}
-                        label="Repeat password"
-                    />
+                    {/*<Input*/}
+                        {/*name="repeatPassword"*/}
+                        {/*type="text"*/}
+                        {/*value={this.state.repeatPassword}*/}
+                        {/*onChange={this.onChangeHandler}*/}
+                        {/*label="Repeat password"*/}
+                    {/*/>*/}
                     <input type="submit" className="btn btn-primary" value="Register" />
                 </form>
             </div>

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.HashMap;
+
 import static adk.lims.core.constants.MessageMapping.Patient.PROBLEM_WITH_SAVING_PATIENT;
 import static adk.lims.core.constants.URLMapping.Patient.PATIENT_BASE;
 import static adk.lims.core.constants.URLMapping.REGISTER;
@@ -25,12 +27,20 @@ public class PatientController {
     }
 
     @PostMapping(REGISTER)
-    public ResponseEntity<?> registerPatient(@RequestBody RegisterPatientBingingModel model){
+    public ResponseEntity<?> registerPatient(@RequestBody RegisterPatientBingingModel model) {
         Patient savedPatient = this.patientService.registerPatient(model);
 
-        if(savedPatient == null)
-            return new ResponseEntity<>(PROBLEM_WITH_SAVING_PATIENT, HttpStatus.BAD_REQUEST);
+        if (savedPatient == null) {
+            return new ResponseEntity<>(new HashMap<String, Object>() {{
+                put("success", false);
+                put("message", "Problem with register patient");
+            }}, HttpStatus.BAD_REQUEST);
+        }
 
-        return new ResponseEntity<>(savedPatient, HttpStatus.OK);
+        return new ResponseEntity<>(new HashMap<String, Object>() {{
+            put("success", true);
+            put("patientId", savedPatient.getId());
+            put("patientPass", savedPatient.getUser().getPassword());
+        }}, HttpStatus.OK);
     }
 }

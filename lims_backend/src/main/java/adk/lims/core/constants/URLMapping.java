@@ -3,6 +3,7 @@ package adk.lims.core.constants;
 public final class URLMapping {
     public static final String REGISTER = "/register";
     public static final String CREATE = "/create";
+    public static final String ADD = "/add";
 
     public static final class Patient {
         public static final String PATIENT_BASE = "/patient";

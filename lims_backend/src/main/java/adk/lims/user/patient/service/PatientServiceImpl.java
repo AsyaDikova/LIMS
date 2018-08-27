@@ -40,8 +40,7 @@ public class PatientServiceImpl implements PatientService{
 
     @Override
     public Patient findPatientByEmail(String email) {
-        Patient patient = this.patientRepository.findByUser_Email(email);
-        return patient;
+        return this.patientRepository.findByUser_Email(email);
     }
 
     @Override
@@ -55,9 +54,7 @@ public class PatientServiceImpl implements PatientService{
         Patient currentPatient = new Patient();
         currentPatient.setUser(savedUser);
 
-        Patient savedPatient = this.patientRepository.save(currentPatient);
-
-        return savedPatient;
+        return this.patientRepository.save(currentPatient);
     }
 
     @Override
@@ -69,17 +66,5 @@ public class PatientServiceImpl implements PatientService{
     public Patient getCurrentPatient() {
         String principalEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return this.patientRepository.findByUser_Email(principalEmail);
-    }
-
-    private String generateRandomPassword(int passLength){
-        String letters = "abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ23456789+@";
-
-        String pass = "";
-        for (int i=0; i<passLength; i++)
-        {
-            int index = (int)(RANDOM.nextDouble()*letters.length());
-            pass += letters.substring(index, index+1);
-        }
-        return pass;
     }
 }

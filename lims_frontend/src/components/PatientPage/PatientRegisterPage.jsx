@@ -18,6 +18,8 @@ class PatientRegisterPage extends Component {
                 length: 10,
                 numbers: true
             }),
+            patientId: '',
+            isConsultation: false,
             error: false
         };
 
@@ -39,9 +41,15 @@ class PatientRegisterPage extends Component {
             return;
         }
 
-        this.state.emailPatient = res.object.email;
+        let pathRedirect = this.state.isConsultation ?  '/consultation/create' : '/analysisResult/create';
 
-        this.props.history.push('/occurrence/create');
+        this.setState({patientId: res.patientId});
+        this.props.history.push({
+            pathname: pathRedirect,
+            state:{
+                patientId:this.state.patientId
+            }
+        })
     }
 
     render() {
@@ -81,7 +89,14 @@ class PatientRegisterPage extends Component {
                         onChange={this.onChangeHandler}
                         label="Password"
                     />
-                    <input type="submit" className="btn btn-primary" value="Register" />
+                    <div class="form-check">
+                        <label class="form-check-label" for="isConsultation">Consultation</label>
+                        <input type="checkbox" class="form-check-input" id="isConsultation"
+                               // checked={!!this.state.isConsultation}
+                               value={this.state.isConsultation} onChange={() => {this.state.isConsultation = !this.state.isConsultation }} />
+                    </div>
+
+                    <input type="submit" className="btn btn-primary" value="Register Patient" />
                 </form>
             </div>
         );

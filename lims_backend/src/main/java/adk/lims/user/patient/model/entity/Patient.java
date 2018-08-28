@@ -60,4 +60,8 @@ public class Patient {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public String getFullName(){
+        return String.format("%s %s", this.getUser().getFirstName(), this.getUser().getLastName());
+    }
 }

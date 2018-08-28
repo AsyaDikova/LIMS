@@ -13,4 +13,5 @@ public interface EmployeeService {
 
     Employee getCurrentEmployee();
 
+    Employee findEmployeeByUserId(Long userId);
 }

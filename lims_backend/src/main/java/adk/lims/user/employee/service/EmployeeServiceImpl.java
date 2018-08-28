@@ -8,7 +8,6 @@ import adk.lims.core.role.RoleType;
 import adk.lims.dayschedule.service.DayScheduleService;
 import adk.lims.user.abstractuser.model.User;
 import adk.lims.user.abstractuser.service.UserService;
-import adk.lims.user.employee.exception.PasswordNotRepeatCorrectException;
 import adk.lims.user.employee.model.binding.EmployeeRegistryBindingModel;
 import adk.lims.user.employee.model.entity.Employee;
 import adk.lims.user.employee.repository.EmployeeRepository;
@@ -16,8 +15,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import static adk.lims.core.constants.ExceptionMessage.PASSWORD_MISMATCH_MESSAGE;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService{
@@ -85,6 +82,11 @@ public class EmployeeServiceImpl implements EmployeeService{
     public Employee getCurrentEmployee() {
         String principalEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return this.employeeRepository.findByUser_Email(principalEmail);
+    }
+
+    @Override
+    public Employee findEmployeeByUserId(Long userId) {
+        return this.employeeRepository.findByUser_Id(userId);
     }
 
 }

@@ -25,4 +25,9 @@ public interface DayScheduleRepository extends JpaRepository<DaySchedule, Long>{
     List<DaySchedule> findAllByCalendarSchedule_Id(Long calendarScheduleId);
 
     List<DaySchedule> findAllByCalendarSchedule_IdAndCurrentDateAfter(Long calendarScheduleId, LocalDate currentDate);
+
+    @Query(value = "SELECT * FROM day_schedules AS ds\n" +
+            "WHERE ds.calendar_schedule_id = (SELECT cs.id FROM calendar_schedules AS cs WHERE cs.employee_id = :employeeId);", nativeQuery = true)
+    List<DaySchedule> findByEmployeeId(@Param("employeeId")Long employeeId);
+
 }

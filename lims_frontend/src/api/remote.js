@@ -155,6 +155,19 @@ async function getDaySchedulesHours(analysisId) {
     return await res.json();
 }
 
+async function getEmployeeDaySchedulesHours() {
+    const res = await fetch(host + 'daySchedule/employee', {
+        method: 'GET',
+        headers: {
+            'Authorization' : 'Bearer ' + localStorage.getItem('authToken'),
+            'Content-Type': 'application/json'
+        }
+    });
+    return await res.json();
+}
+
+
+
 
 
 export { register, login, getAnalyzes, getAnalysesDetails, createAnalyses, getEmployeeDetails,

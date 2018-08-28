@@ -48,5 +48,10 @@ public class ConsultationServiceImpl implements ConsultationService {
         return saveConsultation;
     }
 
+    @Override
+    public Consultation findConsultationById(Long consultationId) {
+        return this.consultationRepository.getOne(consultationId);
+    }
+
 
 }

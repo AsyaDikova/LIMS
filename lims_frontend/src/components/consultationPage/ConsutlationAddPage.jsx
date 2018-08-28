@@ -22,7 +22,6 @@ class ConsultationAddPage extends Component {
 
         this.onChangeHandler = this.onChangeHandler.bind(this);
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
-        this.onSelectDate = this.onSelectDate.bind(this);
     }
 
     componentDidMount() {
@@ -36,32 +35,31 @@ class ConsultationAddPage extends Component {
 
         const schedules = await getDaySchedulesHours(Number(this.state.analysisId));
         this.setState({daySchedules: schedules});
+        this.setState({dateOfConsultation: schedules[0].currentDate });
+        this.setState({hourOfConsultation: schedules[0].freeHours[0].hour});
+        this.setState({currentDaySchedule: schedules[0].freeHours});
 
         console.log(this.state);
-    }
-
-    onSelectDate(e) {
-        this.setState({ [e.target.name]: e.target.value });
-
-        console.log(this.state);
-
-        // console.log(this.state);
-        //
-        // let currentDaySchedule;
-        // for (let day of this.state.daySchedules) {
-        //     if(day.currentDate = this.state.dateOfConsultation){
-        //         currentDaySchedule = day.freeHours;
-        //     }
-        // }
-        //
-        // console.log(currentDaySchedule);
-        //
-        // this.setState({currentDaySchedule: currentDaySchedule});
     }
 
     onChangeHandler(e) {
-        this.setState({ [e.target.name]: e.target.value });
-        console.log(this.state);
+        this.setState({[e.target.name]: e.target.value});
+
+        if(e.target.name === 'dateOfConsultation'){
+
+            let currentDaySchedule = [];
+            const stateDaySchedule = this.state.daySchedules;
+
+            for (var d = 0; d < stateDaySchedule.length; d++) {
+                console.log(stateDaySchedule[d]);
+                console.log(this.state.daySchedules);
+                if(stateDaySchedule[d].currentDate === e.target.value){
+                    currentDaySchedule = stateDaySchedule[d].freeHours;
+                }
+            }
+
+            this.setState({currentDaySchedule: currentDaySchedule});
+        }
     }
 
     async onSubmitHandler(e) {
@@ -96,6 +94,7 @@ class ConsultationAddPage extends Component {
                         onChange={this.onChangeHandler}
                         label="Consultation Date"
                     />
+
 
                     <label> Free Hours for Consultation  </label>
                     <select name="hourOfConsultation" onChange={this.onChangeHandler}>

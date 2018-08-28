@@ -59,7 +59,9 @@ public class DayScheduleServiceImpl implements DayScheduleService {
     @Override
     public List<DayScheduleFreeHoursByAnalysisIdViewModel> getFreeHourByAnalysisId(Long analysisId) {
         Long calendarScheduleId = this.dayScheduleRepository.getCalendarIdByAnalysisId(analysisId);
-        List<DaySchedule> daySchedules = this.dayScheduleRepository.findAllByCalendarSchedule_Id(calendarScheduleId);
+//        List<DaySchedule> daySchedules = this.dayScheduleRepository.findAllByCalendarSchedule_Id(calendarScheduleId);
+        LocalDate currentDate = LocalDate.now();
+        List<DaySchedule> daySchedules = this.dayScheduleRepository.findAllByCalendarSchedule_IdAndCurrentDateAfter(calendarScheduleId, currentDate);
         List<DayScheduleFreeHoursByAnalysisIdViewModel> result = new ArrayList<>();
         for (DaySchedule currentDaySchedule : daySchedules) {
             result.add(this.populateOneDay(currentDaySchedule));

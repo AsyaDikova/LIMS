@@ -4,21 +4,24 @@ import adk.lims.analysisresult.model.entity.AnalysisResult;
 import adk.lims.consultation.model.entity.Consultation;
 import adk.lims.user.abstractuser.model.User;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.*;
+import java.util.*;
 
 @Entity
 @Table(name = "patients")
-public class Patient extends User{
+public class Patient {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @OneToMany(mappedBy = "patient")
     private List<AnalysisResult> analysisResults;
 
     @OneToMany(mappedBy = "patient")
     private List<Consultation> consultations;
+
+    @OneToOne
+    private User user;
 
     public Patient() {
         super();
@@ -40,5 +43,21 @@ public class Patient extends User{
 
     public void setConsultations(List<Consultation> consultations) {
         this.consultations = consultations;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

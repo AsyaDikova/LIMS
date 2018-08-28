@@ -1,7 +1,7 @@
 package adk.lims.analysis.model.type;
 
 public enum AnalysisType {
-    KARYOTYPE,
-    EXOMESEQUENCING,
-    THROMBOPHILIA
+    GENETIC_PREDISPOSITION,
+    NEXT_GENERATION_SEQUENCING,
+    CHROMOSOMAL_ABNORMALITY
 }

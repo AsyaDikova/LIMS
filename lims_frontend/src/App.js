@@ -14,6 +14,7 @@ import RegistrarRoute from "./components/common/RegistrarRoute";
 import PatientRegisterPage from "./components/patientPage/PatientRegisterPage"
 import ConsultationAddPage from "./components/consultationPage/ConsutlationAddPage";
 import AnalysisResultAddPage from "./components/analysesResultPage/AnalysisResultAddPage";
+import EmployeeSchedule from "./components/employeePage/EmployeeSchedule";
 
 
 class App extends Component {
@@ -46,6 +47,7 @@ class App extends Component {
                   <RegistrarRoute path="/analysisResult/create" component={AnalysisResultAddPage}/>
                   <PrivateRoute path="/analysis/add" component={AnalysesAddPage} />
                   <PrivateRoute path="/employee/profile" component={EmployeeDetailsPage} />
+                  <PrivateRoute path="/employee/schedule" component={EmployeeSchedule} />
               </Switch>
           </div>
       );

@@ -171,4 +171,4 @@ async function getEmployeeDaySchedulesHours() {
 
 
 export { register, login, getAnalyzes, getAnalysesDetails, createAnalyses, getEmployeeDetails,
-    registerPatient, getAnalyzesName, createConsultation, createAnalysisResult, getDaySchedulesHours};
+    registerPatient, getAnalyzesName, createConsultation, createAnalysisResult, getDaySchedulesHours, getEmployeeDaySchedulesHours};

@@ -1,6 +1,5 @@
 package adk.lims.dayschedule.controller;
 
-import adk.lims.dayschedule.model.binding.DaySchedulesFreeHoursBindingModel;
 import adk.lims.dayschedule.model.view.DayScheduleFreeHoursByAnalysisIdViewModel;
 import adk.lims.dayschedule.service.DayScheduleService;
 import org.springframework.http.HttpStatus;

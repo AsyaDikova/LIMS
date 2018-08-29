@@ -51,7 +51,9 @@ public class AnalysisResultServiceImpl implements AnalysisResultService{
         analysisResult.setPatient(patient);
         analysisResult.setDueDate(dueDate);
 
-        return this.analysisResultRepository.save(analysisResult);
+        AnalysisResult saveAnalysisResult = this.analysisResultRepository.save(analysisResult);
+
+        return saveAnalysisResult;
     }
 
     @Override

@@ -3,6 +3,8 @@ import Input from '../common/Input';
 import { registerPatient } from '../../api/remote';
 import { withRouter } from 'react-router-dom';
 import * as generator from "generate-password";
+import { NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 
 class PatientRegisterPage extends Component {
@@ -37,8 +39,11 @@ class PatientRegisterPage extends Component {
         const res = await registerPatient(this.state.email, this.state.firstName, this.state.lastName, this.state.phoneNumber, this.state.password);
 
         if(!res.success){
+            NotificationManager.error(res.message);
             this.setState({error: res.message});
             return;
+        } else {
+            NotificationManager.info('Correct register patiend: ' + res.patientId + 'with password: ' + res.patientPass);
         }
 
         let pathRedirect = this.state.isConsultation ?  '/consultation/create' : '/analysisResult/create';
@@ -92,7 +97,6 @@ class PatientRegisterPage extends Component {
                     <div class="form-check">
                         <label class="form-check-label" for="isConsultation">Consultation</label>
                         <input type="checkbox" class="form-check-input" id="isConsultation"
-                               // checked={!!this.state.isConsultation}
                                value={this.state.isConsultation} onChange={() => {this.state.isConsultation = !this.state.isConsultation }} />
                     </div>
 

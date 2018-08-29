@@ -166,9 +166,20 @@ async function getEmployeeDaySchedulesHours() {
     return await res.json();
 }
 
+async function getPatientConsultations() {
+    const res = await fetch(host + 'patient/consultation', {
+        method: 'GET',
+        headers: {
+            'Authorization' : 'Bearer ' + localStorage.getItem('authToken'),
+            'Content-Type': 'application/json'
+        }
+    });
+    return await res.json();
+}
 
 
 
 
 export { register, login, getAnalyzes, getAnalysesDetails, createAnalyses, getEmployeeDetails,
-    registerPatient, getAnalyzesName, createConsultation, createAnalysisResult, getDaySchedulesHours, getEmployeeDaySchedulesHours};
+    registerPatient, getAnalyzesName, createConsultation, createAnalysisResult, getDaySchedulesHours, getEmployeeDaySchedulesHours,
+    getPatientConsultations};

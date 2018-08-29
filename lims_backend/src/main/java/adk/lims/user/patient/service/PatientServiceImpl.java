@@ -59,12 +59,17 @@ public class PatientServiceImpl implements PatientService{
 
     @Override
     public Patient findPatientById(Long id) {
-        return this.patientRepository.getOne(id);
+        return this.patientRepository.getPatientById(id);
     }
 
     @Override
     public Patient getCurrentPatient() {
         String principalEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return this.patientRepository.findByUser_Email(principalEmail);
+    }
+
+    @Override
+    public Patient save(Patient patient) {
+        return this.patientRepository.save(patient);
     }
 }

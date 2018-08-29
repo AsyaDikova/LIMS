@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.Date;
 
 public class JwtAuthenticationFilterEmployee extends UsernamePasswordAuthenticationFilter {
-    private static final int EXPIRATION_DURATION = 1200000;
+    private static final int EXPIRATION_DURATION = 12000000;
 
     private final AuthenticationManager authenticationManager;
 
@@ -52,6 +52,8 @@ public class JwtAuthenticationFilterEmployee extends UsernamePasswordAuthenticat
                 .setSubject(((User) authResult.getPrincipal()).getUsername())
                 .claim("isAdmin", authResult.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")))
                 .claim("isRegistrar", authResult.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_REGISTRAR")))
+                .claim("isPatient", authResult.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_PATIENT")))
+                .claim("isEmployee", authResult.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_EMPLOYEE")))
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_DURATION))
                 .signWith(SignatureAlgorithm.HS256, JwtSecurityConstants.SECRET.getBytes())
                 .compact();

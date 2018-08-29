@@ -30,6 +30,8 @@ class LoginPage extends Component {
         localStorage.setItem('user', decode(res.Authorization.toString().replace("Bearer", "")).sub);
         localStorage.setItem('isAdmin', decode(res.Authorization.toString().replace("Bearer", "")).isAdmin);
         localStorage.setItem('isRegistrar', decode(res.Authorization.toString().replace("Bearer", "")).isRegistrar);
+        localStorage.setItem('isPatient', decode(res.Authorization.toString().replace("Bearer", "")).isPatient);
+        localStorage.setItem('isEmployee', decode(res.Authorization.toString().replace("Bearer", "")).isEmployee);
 
         this.props.history.push('/');
     }

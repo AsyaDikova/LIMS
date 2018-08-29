@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {withRouter} from "react-router-dom";
 import {createAnalysisResult, getAnalyzes} from "../../api/remote";
+import { NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 class AnalysisResultAddPage extends Component {
     constructor(props) {
@@ -47,11 +49,14 @@ class AnalysisResultAddPage extends Component {
         const res = await createAnalysisResult(this.state.patientId, Number(this.state.analysisId));
 
         if(!res.success){
+            NotificationManager.error(res.message);
             this.setState({error: res.message});
             return;
+        } else {
+            NotificationManager.info('Correct register analysis result');
         }
 
-        this.props.history.push('/');
+        this.props.history.push({pathname: '/'});
     }
 
     render() {

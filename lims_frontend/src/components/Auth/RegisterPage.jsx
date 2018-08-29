@@ -3,6 +3,8 @@ import Input from '../common/Input';
 import { register } from '../../api/remote';
 import { withRouter } from 'react-router-dom';
 import * as generator from "generate-password";
+import { NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 
 class RegisterPage extends Component {
@@ -43,8 +45,12 @@ class RegisterPage extends Component {
             this.state.firstName, this.state.lastName, this.state.phoneNumber);
 
         if(!res.success){
+            NotificationManager.error(res.message);
             this.setState({error: res.message});
             return;
+        } else {
+            NotificationManager.success(res.message);
+            NotificationManager.success(res.employeePass);
         }
         this.props.history.push('/');
     }

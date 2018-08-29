@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static adk.lims.core.constants.MessageMapping.AnalysisResult.PROBLEM_WITH_SAVING_ANALYSIS_RESULT;
@@ -32,10 +33,16 @@ public class AnalysisResultController {
     public ResponseEntity<?> createAnalysisResult(@RequestBody CreateAnalysisResult model){
         AnalysisResult savedAnalysisResult = this.analysisResultService.createAnalysisResult(model);
         if(savedAnalysisResult == null){
-            return new ResponseEntity<>(PROBLEM_WITH_SAVING_ANALYSIS_RESULT, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new HashMap<String, Object>() {{
+                put("success", false);
+                put("message", PROBLEM_WITH_SAVING_ANALYSIS_RESULT);
+            }}, HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<>(savedAnalysisResult, HttpStatus.OK);
+        return new ResponseEntity<>(new HashMap<String, Object>() {{
+            put("success", true);
+            put("message", "Correct make analysis result");
+        }}, HttpStatus.OK);
     }
 
     @GetMapping(ALL_MY_RESULT)

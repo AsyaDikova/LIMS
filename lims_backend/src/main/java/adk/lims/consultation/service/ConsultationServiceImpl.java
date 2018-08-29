@@ -11,6 +11,8 @@ import adk.lims.user.patient.model.entity.Patient;
 import adk.lims.user.patient.service.PatientService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ConsultationServiceImpl implements ConsultationService {
     private final ConsultationRepository consultationRepository;
@@ -52,6 +54,4 @@ public class ConsultationServiceImpl implements ConsultationService {
     public Consultation findConsultationById(Long consultationId) {
         return this.consultationRepository.getOne(consultationId);
     }
-
-
 }

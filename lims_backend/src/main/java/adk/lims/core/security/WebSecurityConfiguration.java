@@ -39,6 +39,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/analysis/**").access("hasRole('ROLE_REGISTRAR') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EMPLOYEE')")
                 .antMatchers("/daySchedule/employee").access("hasRole('ROLE_REGISTRAR') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EMPLOYEE')")
                 .antMatchers("/employee/register", "/admin/**").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/patient/consultation").access("hasRole('ROLE_PATIENT')")
                 .anyRequest().authenticated()
                 .and()
                 .logout().logoutUrl("/logout")

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Input from '../common/Input';
 import { getAnalyzesName, createConsultation, getDaySchedulesHours } from '../../api/remote';
 import { withRouter } from 'react-router-dom';
+import { NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 
 class ConsultationAddPage extends Component {
@@ -68,11 +70,14 @@ class ConsultationAddPage extends Component {
         const res = await createConsultation(this.state.patientId, Number(this.state.analysisId), Number(this.state.hourOfConsultation), this.state.dateOfConsultation);
 
         if(!res.success){
+            NotificationManager.error(res.message);
             this.setState({error: res.message});
             return;
+        } else {
+            NotificationManager.info('consultation: ' + res.consultation.id);
         }
 
-        this.props.history.push('/');
+        this.props.history.push({pathname: '/'});
     }
 
     render() {

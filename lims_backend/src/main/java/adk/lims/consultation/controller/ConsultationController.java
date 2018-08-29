@@ -41,7 +41,7 @@ public class ConsultationController {
 
         return new ResponseEntity<>(new HashMap<String, Object>(){{
             put("success", true);
-            put("consultation", savedConsultation);
+            put("consultation", savedConsultation.getId());
         }}, HttpStatus.OK);
     }
 }

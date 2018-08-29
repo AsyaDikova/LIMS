@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Input from '../common/Input';
 import { createAnalyses } from '../../api/remote';
 import { withRouter } from 'react-router-dom';
+import { NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 
 class AnalysesAddPage extends Component {
@@ -33,8 +35,11 @@ class AnalysesAddPage extends Component {
             Number(this.state.periodOfProduct), this.state.type);
 
         if(!res.success){
+            NotificationManager.error(res.message);
             this.setState({error: res.message});
             return;
+        } else {
+            NotificationManager.info('Correct make analysis.');
         }
         this.props.history.push('/');
     }

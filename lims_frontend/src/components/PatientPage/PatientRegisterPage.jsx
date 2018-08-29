@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Input from '../common/Input';
-import { registerPatient } from '../../api/remote';
+import { registerPatient, getPatientIsExist } from '../../api/remote';
 import { withRouter } from 'react-router-dom';
 import * as generator from "generate-password";
 import { NotificationManager } from 'react-notifications';
@@ -20,6 +20,8 @@ class PatientRegisterPage extends Component {
                 length: 10,
                 numbers: true
             }),
+            isExist: false,
+            patientExistFlag: false,
             patientId: '',
             isConsultation: false,
             error: false
@@ -29,32 +31,63 @@ class PatientRegisterPage extends Component {
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
     }
 
+    componentDidMount() {
+        this.setState({isExist: false,
+            patientExistFlag: false,
+            patientId: '',
+            isConsultation: false  });
+    }
+
+
     onChangeHandler(e) {
         this.setState({ [e.target.name]: e.target.value });
     }
 
+
+
     async onSubmitHandler(e) {
         e.preventDefault();
 
-        const res = await registerPatient(this.state.email, this.state.firstName, this.state.lastName, this.state.phoneNumber, this.state.password);
+        if(!this.state.isExist && !this.state.patientExistFlag){
+            const resData = await getPatientIsExist(this.state.email);
 
-        if(!res.success){
-            NotificationManager.error(res.message);
-            this.setState({error: res.message});
-            return;
-        } else {
-            NotificationManager.info('Correct register patiend: ' + res.patientId + 'with password: ' + res.patientPass);
-        }
+            this.setState({isExist : resData.isExist});
+            this.setState({patientExistFlag : true});
 
-        let pathRedirect = this.state.isConsultation ?  '/consultation/create' : '/analysisResult/create';
-
-        this.setState({patientId: res.patientId});
-        this.props.history.push({
-            pathname: pathRedirect,
-            state:{
-                patientId:this.state.patientId
+            if(resData.isExist){
+                this.setState({patientId : resData.patientId});
             }
-        })
+        } else if(!this.state.isExist && this.state.patientExistFlag) {
+
+            const res = await registerPatient(this.state.email, this.state.firstName, this.state.lastName, this.state.phoneNumber, this.state.password);
+
+            if (!res.success) {
+                NotificationManager.error(res.message);
+                this.setState({error: res.message});
+                return;
+            } else {
+                NotificationManager.info('Correct register patiend: ' + res.patientId + 'with password: ' + res.patientPass);
+            }
+
+            let pathRedirect = this.state.isConsultation ? '/consultation/create' : '/analysisResult/create';
+
+            this.setState({patientId: res.patientId});
+            this.props.history.push({
+                pathname: pathRedirect,
+                state: {
+                    patientId: this.state.patientId
+                }
+            })
+        } else {
+            let pathRedirect = this.state.isConsultation ? '/consultation/create' : '/analysisResult/create';
+
+            this.props.history.push({
+                pathname: pathRedirect,
+                state: {
+                    patientId: this.state.patientId
+                }
+            })
+        }
     }
 
     render() {
@@ -99,7 +132,7 @@ class PatientRegisterPage extends Component {
                                value={this.state.isConsultation} onChange={() => {this.state.isConsultation = !this.state.isConsultation }} />
                             <label class="form-check-label" for="isConsultation">Consultation</label>
                     </div>
-                    <input type="submit" className="btn btn-primary" value="Register Patient" />
+                    <input type="submit" className="btn btn-primary" value={!this.state.isExist ? "Register Patient" : "Continue"} />
                 </form>
             </div>
         );

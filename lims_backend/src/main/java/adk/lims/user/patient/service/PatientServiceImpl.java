@@ -72,4 +72,9 @@ public class PatientServiceImpl implements PatientService{
     public Patient save(Patient patient) {
         return this.patientRepository.save(patient);
     }
+
+    @Override
+    public boolean isExist(String email) {
+        return this.patientRepository.findByUser_Email(email) != null;
+    }
 }

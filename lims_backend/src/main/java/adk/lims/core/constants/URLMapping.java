@@ -4,6 +4,7 @@ public final class URLMapping {
     public static final String REGISTER = "/register";
     public static final String CREATE = "/create";
     public static final String ADD = "/add";
+    public static final String IS_EXIST = "isExist";
 
     public static final class Patient {
         public static final String PATIENT_BASE = "/patient";

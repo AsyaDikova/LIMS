@@ -13,4 +13,6 @@ public interface PatientService {
     Patient getCurrentPatient();
 
     Patient save(Patient patient);
+
+    boolean isExist(String email);
 }

@@ -104,7 +104,7 @@ class ConsultationAddPage extends Component {
                     <div class="form-group">
                         <label for="hours">Free Hours for Consultation</label>
                         <select class="form-control" name="hourOfConsultation" onChange={this.onChangeHandler}>
-                            {this.state.currentDaySchedule.map(a => <option value={a.hour} key={a.hour}>{a.hour}</option>)}
+                            {this.state.currentDaySchedule.map(a => <option value={a.hour} key={a.hour}>{a.hour}:00</option>)}
                         </select>
                     </div>
 

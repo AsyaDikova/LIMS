@@ -178,8 +178,20 @@ async function getPatientConsultations() {
 }
 
 
+async function getPatientIsExist(email) {
+    const res = await fetch(host + 'patient/isExist?email=' + email, {
+        method: 'GET',
+        headers: {
+            'Authorization' : 'Bearer ' + localStorage.getItem('authToken'),
+            'Content-Type': 'application/json'
+        }
+    });
+    return await res.json();
+}
+
+
 
 
 export { register, login, getAnalyzes, getAnalysesDetails, createAnalyses, getEmployeeDetails,
     registerPatient, getAnalyzesName, createConsultation, createAnalysisResult, getDaySchedulesHours, getEmployeeDaySchedulesHours,
-    getPatientConsultations};
+    getPatientConsultations, getPatientIsExist};

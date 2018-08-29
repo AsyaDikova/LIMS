@@ -1,10 +1,17 @@
 package adk.lims.user.patient.model.binding;
 
+import javax.validation.constraints.NotEmpty;
+
 public class RegisterPatientBingingModel {
+    @NotEmpty
     private String email;
+    @NotEmpty
     private String password;
+    @NotEmpty
     private String firstName;
+    @NotEmpty
     private String lastName;
+    @NotEmpty
     private String phoneNumber;
 
     public RegisterPatientBingingModel() {

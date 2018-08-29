@@ -1,10 +1,18 @@
 package adk.lims.analysis.model.binding;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class AddAnalysisBindingModel {
+    @NotEmpty
     private String name;
+    @NotEmpty
     private String description;
+    @NotNull
     private Double price;
+    @NotNull
     private int periodOfProduct;
+    @NotEmpty
     private String type;
 
     public AddAnalysisBindingModel() {

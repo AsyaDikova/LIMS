@@ -1,12 +1,18 @@
 package adk.lims.consultation.model.binding;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public class CreateConsultationBindingModel {
-
+    @NotEmpty
     private LocalDate dateOfConsultation;
+    @Min(9)
     private int hourOfConsultation;
+    @Min(1)
     private Long analysisId;
+    @Min(1)
     private Long patientId;
 
     public CreateConsultationBindingModel() {

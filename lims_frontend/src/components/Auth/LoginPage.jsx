@@ -43,12 +43,14 @@ class LoginPage extends Component {
                 <div>{this.state.error}</div>
                 <form onSubmit={this.onSubmitHandler}>
                     <Input
+                        required="required"
                         name="email"
                         value={this.state.email}
                         onChange={this.onChangeHandler}
                         label="Email"
                     />
                     <Input
+                        required="required"
                         name="password"
                         type="password"
                         value={this.state.password}

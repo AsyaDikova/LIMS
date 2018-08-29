@@ -50,6 +50,7 @@ class AnalysesAddPage extends Component {
                 <h1>Create Analyses</h1>
                 <form onSubmit={this.onSubmitHandler}>
                     <Input
+                        required="required"
                         name="name"
                         value={this.state.name}
                         type="text"
@@ -59,6 +60,7 @@ class AnalysesAddPage extends Component {
                     <div class="form-group">
                         <label htmlFor="price">Price</label>
                         <input
+                            required="required"
                             class="form-control"
                             name="price"
                             value={this.state.price}
@@ -71,21 +73,15 @@ class AnalysesAddPage extends Component {
                     <div class="form-group">
                         <label for="description">Description</label>
                         <textarea class="form-control" rows="5" id="description"
+                                  required="required"
                                   name="description"
                                   type="text"
                                   value={this.state.description}
                                   onChange={this.onChangeHandler}>
-
                         </textarea>
                     </div>
-                    {/*<Input*/}
-                        {/*name="description"*/}
-                        {/*type="text"*/}
-                        {/*value={this.state.description}*/}
-                        {/*onChange={this.onChangeHandler}*/}
-                        {/*label="Description"*/}
-                    {/*/>*/}
                     <Input
+                        required="required"
                         name="periodOfProduct"
                         type="number"
                         step="1"

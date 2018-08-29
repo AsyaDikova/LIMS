@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -43,9 +44,12 @@ public class AnalysisController {
         return new ResponseEntity<>(analysis, HttpStatus.OK);
     }
 
+    @ExceptionHandler({RuntimeException.class})
     @PostMapping(value = ANALYSIS_ADD, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<?> addAnalysis(@RequestBody AddAnalysisBindingModel model){
+    public ResponseEntity<?> addAnalysis(@RequestBody @Validated AddAnalysisBindingModel model){
+
         Analysis savedAnalysis = this.analysisService.createAnalysis(model);
+
         if(savedAnalysis == null)
             return new ResponseEntity<>(new HashMap<String, Object>(){{
                 put("success", false);

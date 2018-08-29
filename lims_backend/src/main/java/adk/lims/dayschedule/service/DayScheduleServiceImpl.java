@@ -1,6 +1,7 @@
 package adk.lims.dayschedule.service;
 
 import adk.lims.calendarschedule.model.entity.CalendarSchedule;
+import adk.lims.calendarschedule.service.CalendarScheduleService;
 import adk.lims.consultation.model.entity.Consultation;
 import adk.lims.consultation.repository.ConsultationRepository;
 import adk.lims.dayschedule.model.entity.DaySchedule;
@@ -10,6 +11,7 @@ import adk.lims.dayschedule.model.view.DayScheduleFreeHoursByAnalysisIdViewModel
 import adk.lims.dayschedule.model.view.FreeHoursInDayViewModel;
 import adk.lims.dayschedule.repository.DayScheduleRepository;
 import adk.lims.user.employee.model.entity.Employee;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -89,6 +91,11 @@ public class DayScheduleServiceImpl implements DayScheduleService {
         }
 
         return this.populateEmployeeDaySchedule(restricted);
+    }
+
+    @Override
+    public DaySchedule save(DaySchedule daySchedule) {
+        return this.dayScheduleRepository.save(daySchedule);
     }
 
     private void populateHourSchedule(DaySchedule daySchedule, int hour, Long consultationId){

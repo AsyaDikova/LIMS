@@ -92,6 +92,7 @@ class ConsultationAddPage extends Component {
                         </select>
                     </div>
                     <Input
+                        required="required"
                         name="dateOfConsultation"
                         type="date"
                         value={this.state.dateOfConsultation}

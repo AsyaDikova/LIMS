@@ -1,7 +1,11 @@
 package adk.lims.analysisresult.model.binding;
 
+import javax.validation.constraints.NotNull;
+
 public class CreateAnalysisResult {
+    @NotNull
     private Long patientId;
+    @NotNull
     private Long analysisId;
 
     public CreateAnalysisResult() {

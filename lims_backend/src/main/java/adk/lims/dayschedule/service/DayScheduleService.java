@@ -21,4 +21,6 @@ public interface DayScheduleService {
     List<DayScheduleFreeHoursByAnalysisIdViewModel> getFreeHourByAnalysisId(Long analysisId);
 
     List<DayScheduleByEmployeeViewModel> getDaySchedulesForEmployee(Long employeeId);
+
+    DaySchedule save(DaySchedule daySchedule);
 }

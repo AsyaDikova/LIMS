@@ -34,13 +34,6 @@ class RegisterPage extends Component {
     async onSubmitHandler(e) {
         e.preventDefault();
 
-        // if(this.state.password !== this.state.repeatPassword){
-        //     this.setState({
-        //         error: "Password not equals!"
-        //     });
-        //     return;
-        // }
-
         const res = await register(this.state.email, this.state.password,
             this.state.firstName, this.state.lastName, this.state.phoneNumber);
 
@@ -60,43 +53,41 @@ class RegisterPage extends Component {
                 <h1>Register</h1>
                 <form onSubmit={this.onSubmitHandler}>
                     <Input
+                        required="required"
                         name="email"
                         value={this.state.email}
                         onChange={this.onChangeHandler}
                         label="E-mail"
                     />
                     <Input
+                        required="required"
                         name="firstName"
                         value={this.state.firstName}
                         onChange={this.onChangeHandler}
                         label="First Name"
                     />
                     <Input
+                        required="required"
                         name="lastName"
                         value={this.state.lastName}
                         onChange={this.onChangeHandler}
                         label="Last Name"
                     />
                     <Input
+                        required="required"
                         name="phoneNumber"
                         value={this.state.phoneNumber}
                         onChange={this.onChangeHandler}
                         label="Telephone"
                     />
                     <Input
+                        required="required"
                         name="password"
                         type="text"
                         value={this.state.password}
                         onChange={this.onChangeHandler}
                         label="Password"
                     />
-                    {/*<Input*/}
-                        {/*name="repeatPassword"*/}
-                        {/*type="text"*/}
-                        {/*value={this.state.repeatPassword}*/}
-                        {/*onChange={this.onChangeHandler}*/}
-                        {/*label="Repeat password"*/}
-                    {/*/>*/}
                     <input type="submit" className="btn btn-primary" value="Register" />
                 </form>
             </div>

@@ -50,10 +50,9 @@ class AnalysisResultAddPage extends Component {
 
         if(!res.success){
             NotificationManager.error(res.message);
-            this.setState({error: res.message});
             return;
         } else {
-            NotificationManager.info('Correct register analysis result');
+            NotificationManager.success(res.message);
         }
 
         this.props.history.push({pathname: '/'});
@@ -64,7 +63,6 @@ class AnalysisResultAddPage extends Component {
         return (
             <div className="container">
                 <h1>Create Analysis Result</h1>
-                <div>{this.state.error}</div>
                 <form onSubmit={this.onSubmitHandler}>
                     <div class="form-group">
                         <label for="analysis">Analysis</label>

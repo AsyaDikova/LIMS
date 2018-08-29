@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashMap;
 
+import static adk.lims.core.constants.MessageMapping.Employee.PROBLEM_WITH_REGISTER_EMPLOYEE;
+import static adk.lims.core.constants.MessageMapping.Employee.SUCCESSFUL_CREATE_EMPLOYEE;
 import static adk.lims.core.constants.URLMapping.Employee.EMPLOYEE_BASE;
 import static adk.lims.core.constants.URLMapping.REGISTER;
 
@@ -22,13 +24,10 @@ import static adk.lims.core.constants.URLMapping.REGISTER;
 public class EmployeeController {
 
     private final EmployeeService employeeService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
-    public EmployeeController(EmployeeService employeeService,
-                              BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @PostMapping(value = REGISTER, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -38,16 +37,14 @@ public class EmployeeController {
         if(savedEmployee == null){
             return new ResponseEntity<>(new HashMap<>(){{
                 put("success", false);
-                put("message", "You are not register employee " + registerModel.getEmail());
+                put("message", String.format(PROBLEM_WITH_REGISTER_EMPLOYEE, registerModel.getEmail()));
             }}, HttpStatus.BAD_REQUEST);
         }
 
-        String pass = this.bCryptPasswordEncoder.encode(savedEmployee.getUser().getPassword());
-
         return new ResponseEntity<>(new HashMap<>(){{
             put("success", true);
-            put("message", "You are correct register employee " + savedEmployee.getUser().getEmail());
-            put("employeePass", pass);
+            put("message", String.format(SUCCESSFUL_CREATE_EMPLOYEE, savedEmployee.getUser().getEmail(), registerModel.getPassword()));
+            put("employeePassword", registerModel.getPassword());
         }}, HttpStatus.OK);
     }
 }

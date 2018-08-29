@@ -17,6 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import static adk.lims.core.constants.MessageMapping.Analysis.PROBLEM_WITH_SAVING_ANALYSIS;
+import static adk.lims.core.constants.MessageMapping.Analysis.SUCCESS_SAVING_ANALYSIS;
+import static adk.lims.core.constants.URLMapping.Analysis.*;
 
 @Controller
 public class AnalysisController {
@@ -26,7 +28,7 @@ public class AnalysisController {
         this.analysisService = analysisService;
     }
 
-    @GetMapping(value = "/analyzes", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = ANALYZES_BASE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getAllAnalyzes(){
         List<AllAnalyzesViewModel> allAnalyzesViewModelList = this.analysisService.allAnalyzes();
         if(allAnalyzesViewModelList == null)
@@ -35,22 +37,28 @@ public class AnalysisController {
         return new ResponseEntity<>(new HashMap<String, Object>(){{put("analyzes", allAnalyzesViewModelList);}} , HttpStatus.OK);
     }
 
-    @GetMapping(value = "/analyzes/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = ANALYZES_ONE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getOneAnalysisById(@PathVariable Long id){
         AnalysisDetailViewModel analysis = this.analysisService.getAnalysisById(id);
         return new ResponseEntity<>(analysis, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/analysis/add", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = ANALYSIS_ADD, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> addAnalysis(@RequestBody AddAnalysisBindingModel model){
         Analysis savedAnalysis = this.analysisService.createAnalysis(model);
         if(savedAnalysis == null)
-            return new ResponseEntity<>(PROBLEM_WITH_SAVING_ANALYSIS, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new HashMap<String, Object>(){{
+                put("success", false);
+                put("message", PROBLEM_WITH_SAVING_ANALYSIS);
+            }}, HttpStatus.BAD_REQUEST);
 
-        return new ResponseEntity<>(new HashMap<String, String>(){{put("success", "ok");}}, HttpStatus.OK);
+        return new ResponseEntity<>(new HashMap<String, Object>(){{
+            put("success", true);
+            put("message", SUCCESS_SAVING_ANALYSIS);
+        }}, HttpStatus.OK);
     }
 
-    @GetMapping(value = "analysis/namesList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = ANALYSIS_NAMES_LIST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getAnalyzesList(){
         List<AnalyzesNameListViewModel> analyzesNamesList = this.analysisService.getAnalyzesNamesList();
 

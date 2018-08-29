@@ -46,11 +46,9 @@ class RegisterPage extends Component {
 
         if(!res.success){
             NotificationManager.error(res.message);
-            this.setState({error: res.message});
             return;
         } else {
             NotificationManager.success(res.message);
-            NotificationManager.success(res.employeePass);
         }
         this.props.history.push('/');
     }
@@ -60,7 +58,6 @@ class RegisterPage extends Component {
         return (
             <div className="container">
                 <h1>Register</h1>
-                <div>{this.state.error}</div>
                 <form onSubmit={this.onSubmitHandler}>
                     <Input
                         name="email"

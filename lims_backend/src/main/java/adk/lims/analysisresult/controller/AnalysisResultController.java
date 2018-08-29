@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 
+import static adk.lims.core.constants.MessageMapping.AnalysisResult.ANALYSIS_RESULT_SUCCESS;
 import static adk.lims.core.constants.MessageMapping.AnalysisResult.PROBLEM_WITH_SAVING_ANALYSIS_RESULT;
 import static adk.lims.core.constants.URLMapping.AnalysisResult.ALL_MY_RESULT;
 import static adk.lims.core.constants.URLMapping.AnalysisResult.ANALYSIS_RESULT_BASE;
@@ -41,7 +42,7 @@ public class AnalysisResultController {
 
         return new ResponseEntity<>(new HashMap<String, Object>() {{
             put("success", true);
-            put("message", "Correct make analysis result");
+            put("message", ANALYSIS_RESULT_SUCCESS);
         }}, HttpStatus.OK);
     }
 

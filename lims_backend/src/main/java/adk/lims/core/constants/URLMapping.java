@@ -24,5 +24,19 @@ public final class URLMapping {
         public static final String CONSULTATION_BASE = "/consultation";
     }
 
+    public static final class Analysis {
+        public static final String ANALYZES_BASE = "/analyzes";
+        public static final String ANALYZES_ONE = "/analyzes/{id}";
+        public static final String ANALYSIS_ADD = "/analysis/add";
+        public static final String ANALYSIS_NAMES_LIST = "analysis/namesList";
+
+    }
+
+    public static final class DaySchedule {
+        public static final String DAY_SCHEDULE_BASIC = "/daySchedule";
+        public static final String DAY_SCHEDULE_FREE_HOURS = "/freeHours";
+        public static final String DAY_SCHEDULE_EMPLOYEE = "/employee";
+    }
+
     private URLMapping(){}
 }

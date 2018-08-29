@@ -8,7 +8,7 @@ export default class Header extends Component {
         return (
                 <nav class="navbar navbar-light bg-light">
                     <a class="navbar-brand" href="/">
-                        <img src="/public/dna.svg" width="30" height="30" class="d-inline-block align-top" alt="" />
+                        <img src="/images.png" width="30" height="30" class="d-inline-block align-top" alt="" />
                             DNA Analysis
                     </a>
                 <NavLink exact to="/" activeClassName="active">Home</NavLink>

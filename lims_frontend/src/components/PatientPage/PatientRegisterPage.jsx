@@ -63,10 +63,9 @@ class PatientRegisterPage extends Component {
 
             if (!res.success) {
                 NotificationManager.error(res.message);
-                this.setState({error: res.message});
                 return;
             } else {
-                NotificationManager.info('Correct register patiend: ' + res.patientId + 'with password: ' + res.patientPass);
+                NotificationManager.success(res.message);
             }
 
             let pathRedirect = this.state.isConsultation ? '/consultation/create' : '/analysisResult/create';

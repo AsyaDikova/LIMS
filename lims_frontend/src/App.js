@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
-import {NotificationManager} from 'react-notifications';
+import {NotificationContainer} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 
 import Header from './components/common/Header';
@@ -35,6 +35,7 @@ class App extends Component {
   render() {
       return (
           <div className="App">
+              <NotificationContainer/>
               <Header loggedIn={localStorage.getItem('authToken') != null}
                       isAdmin={localStorage.getItem('isAdmin') != null && localStorage.getItem('isAdmin') === 'true'}
                       isRegistrar={localStorage.getItem('isRegistrar') != null && localStorage.getItem('isRegistrar') === 'true'}
@@ -42,7 +43,9 @@ class App extends Component {
                       isEmployee={localStorage.getItem('isEmployee')!= null && localStorage.getItem('isEmployee') === 'true'}
                       user={localStorage.getItem('user')}
                       logout={this.onLogout} />
-              <nav></nav>
+              <div className="container">
+                  <img src="https://png.pngtree.com/element_origin_min_pic/17/02/19/9873471d38895b0d47ab73f8faab47d1.jpg" height="80" width="100%"/>
+              </div>
               <Switch>
                   <Route exact path="/" component={HomePage} />
                   <Route path="/analyzes/:id" component={AnalysesDetailPage} />

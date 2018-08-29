@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static adk.lims.core.constants.MessageMapping.Patient.PROBLEM_WITH_SAVING_PATIENT;
 import static adk.lims.core.constants.URLMapping.Consultation.CONSULTATION_BASE;
 import static adk.lims.core.constants.URLMapping.IS_EXIST;
 import static adk.lims.core.constants.URLMapping.Patient.PATIENT_BASE;
@@ -26,12 +27,9 @@ import static adk.lims.core.constants.URLMapping.REGISTER;
 public class PatientController {
 
     private final PatientService patientService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public PatientController(PatientService patientService,
-                             BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public PatientController(PatientService patientService) {
         this.patientService = patientService;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @PostMapping(value = REGISTER, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -41,16 +39,14 @@ public class PatientController {
         if (savedPatient == null) {
             return new ResponseEntity<>(new HashMap<String, Object>() {{
                 put("success", false);
-                put("message", "Problem with register patient");
+                put("message", PROBLEM_WITH_SAVING_PATIENT);
             }}, HttpStatus.BAD_REQUEST);
         }
-
-        String pass = this.bCryptPasswordEncoder.encode(savedPatient.getUser().getPassword());
 
         return new ResponseEntity<>(new HashMap<String, Object>() {{
             put("success", true);
             put("patientId", savedPatient.getId());
-            put("patientPass", pass);
+            put("patientPassword", model.getPassword());
         }}, HttpStatus.OK);
     }
 

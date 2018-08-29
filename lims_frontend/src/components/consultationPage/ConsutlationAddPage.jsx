@@ -71,10 +71,9 @@ class ConsultationAddPage extends Component {
 
         if(!res.success){
             NotificationManager.error(res.message);
-            this.setState({error: res.message});
             return;
         } else {
-            NotificationManager.info('consultation: ' + res.consultation.id);
+            NotificationManager.success(res.message);
         }
 
         this.props.history.push({pathname: '/'});
@@ -85,7 +84,6 @@ class ConsultationAddPage extends Component {
         return (
             <div className="container">
                 <h1>Create Consultation</h1>
-                <div>{this.state.error}</div>
                 <form onSubmit={this.onSubmitHandler}>
                     <div class="form-group">
                         <label for="analysis">Analysis</label>

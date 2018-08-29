@@ -36,10 +36,9 @@ class AnalysesAddPage extends Component {
 
         if(!res.success){
             NotificationManager.error(res.message);
-            this.setState({error: res.message});
             return;
         } else {
-            NotificationManager.info('Correct make analysis.');
+            NotificationManager.success(res.message);
         }
         this.props.history.push('/');
     }
@@ -49,7 +48,6 @@ class AnalysesAddPage extends Component {
         return (
             <div className="container">
                 <h1>Create Analyses</h1>
-                <div>{this.state.error}</div>
                 <form onSubmit={this.onSubmitHandler}>
                     <Input
                         name="name"
@@ -72,7 +70,7 @@ class AnalysesAddPage extends Component {
 
                     <div class="form-group">
                         <label for="description">Description</label>
-                        <textarea class="form-control" rows="5" id="decription"
+                        <textarea class="form-control" rows="5" id="description"
                                   name="description"
                                   type="text"
                                   value={this.state.description}

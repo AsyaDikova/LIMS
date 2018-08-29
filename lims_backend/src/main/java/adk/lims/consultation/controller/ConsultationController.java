@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashMap;
 
+import static adk.lims.core.constants.MessageMapping.Consultation.PROBLEM_WITH_CREATE_CONSULTATION;
+import static adk.lims.core.constants.MessageMapping.Consultation.SUCCESSFUL_CREATE_CONSULTATION;
 import static adk.lims.core.constants.URLMapping.ADD;
 import static adk.lims.core.constants.URLMapping.CREATE;
 import static adk.lims.core.constants.URLMapping.Consultation.CONSULTATION_BASE;
@@ -35,13 +37,14 @@ public class ConsultationController {
         if(savedConsultation == null){
             return new ResponseEntity<>(new HashMap<String, Object>(){{
                 put("success", false);
-                put("message", "Problem with create consultation");
+                put("message", PROBLEM_WITH_CREATE_CONSULTATION);
             }}, HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity<>(new HashMap<String, Object>(){{
             put("success", true);
             put("consultation", savedConsultation.getId());
+            put("message", SUCCESSFUL_CREATE_CONSULTATION);
         }}, HttpStatus.OK);
     }
 }

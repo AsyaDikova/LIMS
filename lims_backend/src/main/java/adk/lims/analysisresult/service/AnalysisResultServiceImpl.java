@@ -19,6 +19,9 @@ import java.util.List;
 @Service
 public class AnalysisResultServiceImpl implements AnalysisResultService{
 
+    private static final String SUNDAY = "SUNDAY";
+    private static final String SATURDAY = "SATURDAY";
+
     private final AnalysisResultRepository analysisResultRepository;
     private final PatientService patientService;
     private final AnalysisService analysisService;
@@ -38,10 +41,6 @@ public class AnalysisResultServiceImpl implements AnalysisResultService{
     public AnalysisResult createAnalysisResult(CreateAnalysisResult createAnalysisResult) {
         Analysis analysis = this.analysisService.getById(createAnalysisResult.getAnalysisId());
         Patient patient = this.patientService.findPatientById(createAnalysisResult.getPatientId());
-
-//        Date today = new Date();
-//        LocalDate dueDate = LocalDate.from(today.toInstant()).plusDays(analysis.getPeriodOfProduct());
-//        Date dueDate = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
 
         LocalDate dueDate = LocalDate.now();
         dueDate = dueDate.plusDays(this.calculateDueDate(dueDate, analysis.getPeriodOfProduct()));
@@ -86,9 +85,9 @@ public class AnalysisResultServiceImpl implements AnalysisResultService{
         int calculatePeriod = analysisPeriod + (dayOfWeek + analysisPeriod) * 2 / 7 - 1;
 
         LocalDate calcDate = currentDate.plusDays(calculatePeriod);
-        if(calcDate.getDayOfWeek().name().equals("SUNDAY")) {
+        if(calcDate.getDayOfWeek().name().equals(SUNDAY)) {
             calculatePeriod += 1;
-        } else if(calcDate.getDayOfWeek().name().equals("SATURDAY")){
+        } else if(calcDate.getDayOfWeek().name().equals(SATURDAY)){
             calculatePeriod += 2;
         }
 

@@ -28,7 +28,7 @@ class PatientConsultationsPage extends Component {
 
         return (
             <div className="container">
-                <h1>My Consultations</h1>
+                <h2>My Consultations</h2>
                 <table class="table">
                     <thead>
                     <tr>

@@ -6,7 +6,11 @@ export default class Header extends Component {
         const {loggedIn, isAdmin, logout, user, isRegistrar, isEmployee, isPatient} = this.props;
 
         return (
-            <header>
+                <nav class="navbar navbar-light bg-light">
+                    <a class="navbar-brand" href="/">
+                        <img src="/public/dna.svg" width="30" height="30" class="d-inline-block align-top" alt="" />
+                            DNA Analysis
+                    </a>
                 <NavLink exact to="/" activeClassName="active">Home</NavLink>
                 {(isAdmin || isRegistrar || isEmployee) && <NavLink to="/analysis/add" activeClassName="active">Add Analyses</NavLink>}
                 {isAdmin && <NavLink to="/employee/register" activeClassName="active">Employee Register</NavLink>}
@@ -16,7 +20,7 @@ export default class Header extends Component {
                 {loggedIn && <span>Welcome, {user} !</span>}
                 {loggedIn && <a href="javascript:void(0)" onClick={logout}>Logout</a>}
                 {!loggedIn && <NavLink to="/login" activeClassName="active">Login</NavLink>}
-            </header>
+            </nav>
         );
     }
 }

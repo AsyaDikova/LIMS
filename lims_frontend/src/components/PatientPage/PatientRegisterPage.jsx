@@ -95,11 +95,10 @@ class PatientRegisterPage extends Component {
                         label="Password"
                     />
                     <div class="form-check">
-                        <label class="form-check-label" for="isConsultation">Consultation</label>
                         <input type="checkbox" class="form-check-input" id="isConsultation"
                                value={this.state.isConsultation} onChange={() => {this.state.isConsultation = !this.state.isConsultation }} />
+                            <label class="form-check-label" for="isConsultation">Consultation</label>
                     </div>
-
                     <input type="submit" className="btn btn-primary" value="Register Patient" />
                 </form>
             </div>

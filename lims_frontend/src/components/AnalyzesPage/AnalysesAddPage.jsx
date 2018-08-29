@@ -58,9 +58,10 @@ class AnalysesAddPage extends Component {
                         onChange={this.onChangeHandler}
                         label="Name"
                     />
-                    <div>
+                    <div class="form-group">
                         <label htmlFor="price">Price</label>
                         <input
+                            class="form-control"
                             name="price"
                             value={this.state.price}
                             type="number"
@@ -68,25 +69,40 @@ class AnalysesAddPage extends Component {
                             onChange={this.onChangeHandler}
                         />
                     </div>
-                    <Input
-                        name="description"
-                        type="text"
-                        value={this.state.description}
-                        onChange={this.onChangeHandler}
-                        label="Description"
-                    />
+
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" rows="5" id="decription"
+                                  name="description"
+                                  type="text"
+                                  value={this.state.description}
+                                  onChange={this.onChangeHandler}>
+
+                        </textarea>
+                    </div>
+                    {/*<Input*/}
+                        {/*name="description"*/}
+                        {/*type="text"*/}
+                        {/*value={this.state.description}*/}
+                        {/*onChange={this.onChangeHandler}*/}
+                        {/*label="Description"*/}
+                    {/*/>*/}
                     <Input
                         name="periodOfProduct"
                         type="number"
+                        step="1"
                         value={this.state.periodOfProduct}
                         onChange={this.onChangeHandler}
-                        label="periodOfProduct"
+                        label="Days of analyses"
                     />
-                    <select name="type" onChange={this.onChangeHandler}>
-                        <option value="GENETIC_PREDISPOSITION">GENETIC PREDISPOSITION</option>
-                        <option value="NEXT_GENERATION_SEQUENCING">NEXT_GENERATION SEQUENCING</option>
-                        <option value="CHROMOSOMAL_ABNORMALITY">CHROMOSOMAL ABNORMALITY</option>
-                    </select>
+                    <div class="form-group">
+                        <label for="exampleSelect1">Analysis Types</label>
+                            <select name="type" class="form-control" onChange={this.onChangeHandler}>
+                                <option value="GENETIC_PREDISPOSITION">GENETIC PREDISPOSITION</option>
+                                <option value="NEXT_GENERATION_SEQUENCING">NEXT_GENERATION SEQUENCING</option>
+                                <option value="CHROMOSOMAL_ABNORMALITY">CHROMOSOMAL ABNORMALITY</option>
+                            </select>
+                    </div>
                     <input type="submit" className="btn btn-primary" value="Create" />
                 </form>
             </div>

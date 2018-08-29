@@ -67,10 +67,12 @@ class EmployeeSchedule extends Component {
                 <h1>Day Schedule Calendar</h1>
                 <div>{this.state.error}</div>
 
-                <label> Select Day:  </label>
-                <select name="currentDate" onChange={this.onChangeHandler}>
-                    {this.state.allDates.map(a => <option value={a.date} key={a.date}>{a.date}</option>)}
-                </select>
+                <div class="form-group">
+                    <label for="exampleSelect1">Select Day</label>
+                    <select name="currentDate" onChange={this.onChangeHandler} class="form-control mr-sm-2" >
+                        {this.state.allDates.map(a => <option value={a.date} key={a.date}>{a.date}</option>)}
+                    </select>
+                </div>
 
                 <table class="table">
                     <caption>Day Schedule for {this.state.currentDate}</caption>

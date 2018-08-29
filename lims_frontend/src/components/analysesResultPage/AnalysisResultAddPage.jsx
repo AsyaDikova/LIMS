@@ -66,11 +66,13 @@ class AnalysisResultAddPage extends Component {
                 <h1>Create Analysis Result</h1>
                 <div>{this.state.error}</div>
                 <form onSubmit={this.onSubmitHandler}>
-                    <label> Analyses </label>
-                    <select name="analysisId" onChange={this.onCheckAnalysis}>
-                        {this.state.analyzes.map(a => <option value={a.id} key={a.id}>{a.name}</option>)}
-                    </select>
-                    <div>This analysis is ready for {this.state.periodOfProduct} days.</div>
+                    <div class="form-group">
+                        <label for="analysis">Analysis</label>
+                        <select class="form-control" name="analysisId" onChange={this.onCheckAnalysis}>
+                            {this.state.analyzes.map(a => <option value={a.id} key={a.id}>{a.name}</option>)}
+                        </select>
+                    </div>
+                    <div>This analysis is ready for <span> {this.state.periodOfProduct} </span>days.</div>
                     <input type="submit" className="btn btn-primary" value="Create Analysis Result" />
                 </form>
             </div>

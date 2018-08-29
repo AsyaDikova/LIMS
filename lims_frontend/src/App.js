@@ -42,6 +42,7 @@ class App extends Component {
                       isEmployee={localStorage.getItem('isEmployee')!= null && localStorage.getItem('isEmployee') === 'true'}
                       user={localStorage.getItem('user')}
                       logout={this.onLogout} />
+              <nav></nav>
               <Switch>
                   <Route exact path="/" component={HomePage} />
                   <Route path="/analyzes/:id" component={AnalysesDetailPage} />
@@ -54,6 +55,9 @@ class App extends Component {
                   <EmployeeRoute path="/employee/schedule" component={EmployeeSchedule} />
                   <PatientRoute path="/patient/consultation" component={PatientConsultationPage} />
               </Switch>
+              <footer class="page-footer font-small blue">
+                  <div class="text-center py-3">© 2018 Copyright: ADK</div>
+              </footer>
           </div>
       );
   }

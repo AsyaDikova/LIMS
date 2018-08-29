@@ -87,11 +87,12 @@ class ConsultationAddPage extends Component {
                 <h1>Create Consultation</h1>
                 <div>{this.state.error}</div>
                 <form onSubmit={this.onSubmitHandler}>
-                    <label> Analyses </label>
-                    <select name="analysisId" onChange={this.onChangeHandler}>
-                        {this.state.analyzes.map(a => <option value={a.id} key={a.id}>{a.name}</option>)}
-                    </select>
-
+                    <div class="form-group">
+                        <label for="analysis">Analysis</label>
+                        <select class="form-control" name="analysisId" onChange={this.onChangeHandler}>
+                            {this.state.analyzes.map(a => <option value={a.id} key={a.id}>{a.name}</option>)}
+                        </select>
+                    </div>
                     <Input
                         name="dateOfConsultation"
                         type="date"
@@ -100,11 +101,13 @@ class ConsultationAddPage extends Component {
                         label="Consultation Date"
                     />
 
+                    <div class="form-group">
+                        <label for="hours">Free Hours for Consultation</label>
+                        <select class="form-control" name="hourOfConsultation" onChange={this.onChangeHandler}>
+                            {this.state.currentDaySchedule.map(a => <option value={a.hour} key={a.hour}>{a.hour}</option>)}
+                        </select>
+                    </div>
 
-                    <label> Free Hours for Consultation  </label>
-                    <select name="hourOfConsultation" onChange={this.onChangeHandler}>
-                        {this.state.currentDaySchedule.map(a => <option value={a.hour} key={a.hour}>{a.hour}</option>)}
-                    </select>
                     <input type="submit" className="btn btn-primary" value="Create Consultation" />
                 </form>
             </div>

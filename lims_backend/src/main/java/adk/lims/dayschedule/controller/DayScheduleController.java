@@ -35,7 +35,6 @@ public class DayScheduleController {
         List<DayScheduleFreeHoursByAnalysisIdViewModel> dayScheduleResult = this.dayScheduleService.getFreeHourByAnalysisId(analysisId);
 
         return new ResponseEntity<>(dayScheduleResult, HttpStatus.OK);
-
     }
 
     @GetMapping(value = DAY_SCHEDULE_EMPLOYEE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

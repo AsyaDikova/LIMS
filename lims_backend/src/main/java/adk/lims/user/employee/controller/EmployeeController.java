@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashMap;
 
+import static adk.lims.core.constants.MessageMapping.Employee.ERROR_MESSAGE;
 import static adk.lims.core.constants.MessageMapping.Employee.PROBLEM_WITH_REGISTER_EMPLOYEE;
 import static adk.lims.core.constants.MessageMapping.Employee.SUCCESSFUL_CREATE_EMPLOYEE;
 import static adk.lims.core.constants.URLMapping.Employee.EMPLOYEE_BASE;
@@ -32,6 +33,13 @@ public class EmployeeController {
 
     @PostMapping(value = REGISTER, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> registryEmployee(@RequestBody EmployeeRegistryBindingModel registerModel){
+        if(registerModel.getEmail().isEmpty() || registerModel.getPassword().isEmpty() || registerModel.getFirstName().isEmpty() || registerModel.getLastName().isEmpty() || registerModel.getPhoneNumber().isEmpty()){
+            return new ResponseEntity<>(new HashMap<String, Object>(){{
+                put("success", false);
+                put("message", ERROR_MESSAGE);
+            }}, HttpStatus.BAD_REQUEST);
+        }
+
         Employee savedEmployee = this.employeeService.createEmployee(registerModel);
 
         if(savedEmployee == null){

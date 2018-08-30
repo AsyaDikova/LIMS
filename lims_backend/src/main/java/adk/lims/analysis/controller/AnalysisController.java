@@ -10,13 +10,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static adk.lims.core.constants.MessageMapping.Analysis.MODEL_FIELD;
 import static adk.lims.core.constants.MessageMapping.Analysis.PROBLEM_WITH_SAVING_ANALYSIS;
 import static adk.lims.core.constants.MessageMapping.Analysis.SUCCESS_SAVING_ANALYSIS;
 import static adk.lims.core.constants.URLMapping.Analysis.*;
@@ -44,9 +44,19 @@ public class AnalysisController {
         return new ResponseEntity<>(analysis, HttpStatus.OK);
     }
 
-    @ExceptionHandler({RuntimeException.class})
     @PostMapping(value = ANALYSIS_ADD, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<?> addAnalysis(@RequestBody @Validated AddAnalysisBindingModel model){
+    public ResponseEntity<?> addAnalysis(@RequestBody AddAnalysisBindingModel model){
+
+        if(model.getDescription().isEmpty() ||
+                model.getName().isEmpty() ||
+                model.getPeriodOfProduct()<1 ||
+                model.getPrice()<1.00 ||
+                model.getType().isEmpty()){
+            return new ResponseEntity<>(new HashMap<String, Object>(){{
+                put("success", false);
+                put("message", MODEL_FIELD);
+            }}, HttpStatus.BAD_REQUEST);
+        }
 
         Analysis savedAnalysis = this.analysisService.createAnalysis(model);
 

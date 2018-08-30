@@ -35,6 +35,7 @@ class AnalysesAddPage extends Component {
             Number(this.state.periodOfProduct), this.state.type);
 
         if(!res.success){
+            console.log(res.message);
             NotificationManager.error(res.message);
             return;
         } else {

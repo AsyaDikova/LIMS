@@ -7,16 +7,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 
+import static adk.lims.core.constants.MessageMapping.Consultation.ERROR_MESSAGE;
 import static adk.lims.core.constants.MessageMapping.Consultation.PROBLEM_WITH_CREATE_CONSULTATION;
 import static adk.lims.core.constants.MessageMapping.Consultation.SUCCESSFUL_CREATE_CONSULTATION;
-import static adk.lims.core.constants.URLMapping.ADD;
 import static adk.lims.core.constants.URLMapping.CREATE;
 import static adk.lims.core.constants.URLMapping.Consultation.CONSULTATION_BASE;
 
@@ -32,6 +32,14 @@ public class ConsultationController {
 
     @PostMapping(value = CREATE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> createConsultation(@RequestBody CreateConsultationBindingModel model){
+        if(model.getAnalysisId()<1 || model.getPatientId() <1 || model.getDateOfConsultation().isBefore(LocalDate.now()) ||
+                model.getHourOfConsultation()<=8 || model.getHourOfConsultation() >=17 ){
+            return new ResponseEntity<>(new HashMap<String, Object>(){{
+                put("success", false);
+                put("message", ERROR_MESSAGE);
+            }}, HttpStatus.BAD_REQUEST);
+        }
+
         Consultation savedConsultation = this.consultationService.saveConsultation(model);
 
         if(savedConsultation == null){

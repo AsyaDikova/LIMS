@@ -1,18 +1,10 @@
 package adk.lims.user.employee.model.binding;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
 public class EmployeeRegistryBindingModel {
-    @NotEmpty
     private String email;
-    @NotEmpty
     private String password;
-    @NotEmpty
     private String firstName;
-    @NotEmpty
     private String lastName;
-    @NotEmpty
     private String phoneNumber;
 
     public EmployeeRegistryBindingModel() {

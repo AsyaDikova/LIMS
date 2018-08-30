@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 
+import static adk.lims.core.constants.MessageMapping.Analysis.MODEL_FIELD;
 import static adk.lims.core.constants.MessageMapping.AnalysisResult.ANALYSIS_RESULT_SUCCESS;
+import static adk.lims.core.constants.MessageMapping.AnalysisResult.ERROR_MESSAGE;
 import static adk.lims.core.constants.MessageMapping.AnalysisResult.PROBLEM_WITH_SAVING_ANALYSIS_RESULT;
 import static adk.lims.core.constants.URLMapping.AnalysisResult.ALL_MY_RESULT;
 import static adk.lims.core.constants.URLMapping.AnalysisResult.ANALYSIS_RESULT_BASE;
@@ -32,6 +34,13 @@ public class AnalysisResultController {
 
     @PostMapping(CREATE)
     public ResponseEntity<?> createAnalysisResult(@RequestBody CreateAnalysisResult model){
+        if(model.getAnalysisId()<1 || model.getPatientId() <1){
+            return new ResponseEntity<>(new HashMap<String, Object>(){{
+                put("success", false);
+                put("message", ERROR_MESSAGE);
+            }}, HttpStatus.BAD_REQUEST);
+        }
+
         AnalysisResult savedAnalysisResult = this.analysisResultService.createAnalysisResult(model);
         if(savedAnalysisResult == null){
             return new ResponseEntity<>(new HashMap<String, Object>() {{

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static adk.lims.core.constants.MessageMapping.Employee.ERROR_MESSAGE;
 import static adk.lims.core.constants.MessageMapping.Patient.PROBLEM_WITH_SAVING_PATIENT;
 import static adk.lims.core.constants.URLMapping.Consultation.CONSULTATION_BASE;
 import static adk.lims.core.constants.URLMapping.IS_EXIST;
@@ -34,6 +35,13 @@ public class PatientController {
 
     @PostMapping(value = REGISTER, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> registerPatient(@RequestBody RegisterPatientBingingModel model) {
+        if(model.getEmail().isEmpty() || model.getPassword().isEmpty() || model.getFirstName().isEmpty() || model.getLastName().isEmpty() || model.getPhoneNumber().isEmpty()){
+            return new ResponseEntity<>(new HashMap<String, Object>(){{
+                put("success", false);
+                put("message", ERROR_MESSAGE);
+            }}, HttpStatus.BAD_REQUEST);
+        }
+
         Patient savedPatient = this.patientService.registerPatient(model);
 
         if (savedPatient == null) {
@@ -50,7 +58,7 @@ public class PatientController {
         }}, HttpStatus.OK);
     }
 
-    @GetMapping(value =CONSULTATION_BASE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = CONSULTATION_BASE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getPatientConsultations(){
         Patient currentPatient = this.patientService.getCurrentPatient();
 

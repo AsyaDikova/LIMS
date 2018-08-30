@@ -104,28 +104,24 @@ class PatientRegisterPage extends Component {
                         label="E-mail"
                     />
                     <Input
-                        required="required"
                         name="firstName"
                         value={this.state.firstName}
                         onChange={this.onChangeHandler}
                         label="FirstName"
                     />
                     <Input
-                        required="required"
                         name="lastName"
                         value={this.state.lastName}
                         onChange={this.onChangeHandler}
                         label="LastName"
                     />
                     <Input
-                        required="required"
                         name="phoneNumber"
                         value={this.state.phoneNumber}
                         onChange={this.onChangeHandler}
                         label="Phone Number"
                     />
                     <Input
-                        required="required"
                         name="password"
                         value={this.state.password}
                         onChange={this.onChangeHandler}

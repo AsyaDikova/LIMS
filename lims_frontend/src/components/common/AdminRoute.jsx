@@ -8,6 +8,8 @@ export default class AdminRoute extends Component {
             localStorage.getItem('isAdmin') === null ||
             localStorage.getItem('isAdmin') === 'false') {
 
+            localStorage.clear();
+
             return <Redirect to="/login" />;
         }
 

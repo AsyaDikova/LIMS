@@ -65,7 +65,7 @@ class PatientRegisterPage extends Component {
                 NotificationManager.error(res.message);
                 return;
             } else {
-                NotificationManager.success(res.message);
+                NotificationManager.success('Correct create patient.');
             }
 
             let pathRedirect = this.state.isConsultation ? '/consultation/create' : '/analysisResult/create';

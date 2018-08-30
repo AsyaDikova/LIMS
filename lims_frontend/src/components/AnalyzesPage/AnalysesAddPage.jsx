@@ -66,6 +66,7 @@ class AnalysesAddPage extends Component {
                             name="price"
                             value={this.state.price}
                             type="number"
+                            min="1.00"
                             step="0.01"
                             onChange={this.onChangeHandler}
                         />
@@ -86,6 +87,7 @@ class AnalysesAddPage extends Component {
                         name="periodOfProduct"
                         type="number"
                         step="1"
+                        min="1"
                         value={this.state.periodOfProduct}
                         onChange={this.onChangeHandler}
                         label="Days of analyses"
